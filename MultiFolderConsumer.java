@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
@@ -34,6 +35,24 @@ public class MultiFolderConsumer implements IConsumer
                 }
                 return Optional.empty();
             }
+        }
+        throw new IllegalArgumentException("Folder for this Consumer implementation must have class implemented MultiFolder as its argument!");
+    }
+
+    @Override
+    public void FindBySizes(Folder folder, String size, List<Folder> res, Stack<Folder> stackForFindingBySize)
+    {
+        if (folder instanceof MultiFolder)
+        {
+            if (folder.getSize().equals(size))
+            {
+                res.add(folder);
+            }
+            for (Folder f: ((MultiFolder)folder).getFolders())
+            {
+                stackForFindingBySize.add(f);
+            }
+            return;
         }
         throw new IllegalArgumentException("Folder for this Consumer implementation must have class implemented MultiFolder as its argument!");
     }

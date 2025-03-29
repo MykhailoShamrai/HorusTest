@@ -46,8 +46,18 @@ public class FileCabinet implements Cabinet
 
     @Override
     public List<Folder> findFoldersBySize(String size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findFoldersBySize'");
+        Stack<Folder> stackForSizes = new Stack<Folder>();
+        List<Folder> res = new ArrayList<Folder>();
+        for (Folder folder : folders)
+        {
+            consumersMap.get(folder.getClass().getName()).FindBySizes(folder, size, res, stackForSizes);;
+        }
+        while (!stackForSizes.empty())
+        {
+            Folder folderFromStack = stackForSizes.pop();
+            consumersMap.get(folderFromStack.getClass().getName()).FindBySizes(folderFromStack, size, res, stackForSizes);
+        }       
+        return res;
     }
 
     @Override

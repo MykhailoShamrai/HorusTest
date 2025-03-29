@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
@@ -15,5 +16,14 @@ public class FolderConsumer implements IConsumer
         if (folder.getName().equals(pattern))
             return Optional.ofNullable(folder);
         return Optional.empty();
+    }
+
+    @Override
+    public void FindBySizes(Folder folder, String size, List<Folder> res, Stack<Folder> stackForFindingBySize)
+    {
+        if (folder.getSize().equals(size))
+        {
+            res.add(folder);
+        }
     }
 }
